@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import { StoreContext } from "../App";
 
 const SkuItems = (props) => {
-    const {storeState:{activeSkuID}} = useContext(StoreContext);
-    const {skus,updateSelectedSkuHandler} = props
+    const {storeState: {activeSkuID}} = useContext(StoreContext);
+    const {skus, updateSelectedSkuHandler} = props
     const [skuItems, setSkuItems] = useState([])
     useEffect(() => {
-        if (skus){
-            setSkuItems(skus.map(item =>{
+        if (skus) {
+            setSkuItems(skus.map(item => {
                 const {
+                    productID,
+                    image,
                     skuID,
                     size,
                     color,
@@ -18,8 +20,10 @@ const SkuItems = (props) => {
                     stock
                 } = item;
                 const title = [color, size, style].filter(i => i?.length).join("/ ") || 'Current'
-                if (title){
+                if (title) {
                     return {
+                        productID,
+                        image,
                         skuID,
                         title,
                         price,
@@ -28,7 +32,7 @@ const SkuItems = (props) => {
                 }
             }))
         }
-    },[skus])
+    }, [skus])
 
     return (
         <div className="d-flex align-items-center">
@@ -38,9 +42,9 @@ const SkuItems = (props) => {
                     skuItems.map(item => {
                         return (
                             <li className="list-inline-item" key={`sku-item-li-${item.skuID}`}><Link
-                                onClick={()=>updateSelectedSkuHandler(item)}
-                                style={{width: 'auto', margin:5, paddingLeft:5,paddingRight:5}}
-                                className={`btn btn-icon ${item.skuID !== activeSkuID ?'btn-soft-primary':'btn-soft-warning'}`}> {item.title} </Link>
+                                onClick={() => updateSelectedSkuHandler(item)}
+                                style={{width: 'auto', margin: 5, paddingLeft: 5, paddingRight: 5}}
+                                className={`btn btn-icon ${item.skuID !== activeSkuID ? 'btn-soft-primary' : 'btn-soft-warning'}`}> {item.title} </Link>
                             </li>
                         )
                     })

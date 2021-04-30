@@ -14,8 +14,7 @@ const initialState = {
     activeProduct: {},
     activeSkuID: null,
     products: [],
-    cart: [],
-
+    cart: {}
 }
 
 function storeReducer(state, action) {
@@ -29,6 +28,24 @@ function storeReducer(state, action) {
             return Object.assign({}, state, action.payload);
         case 'clearActiveSku':
             return Object.assign({}, state, {activeSkuID: null});
+        case 'addItemToCart':
+            // Didn't handle the stock in sku.
+            let cart = Object.assign({}, state.cart)
+            const {sku, quantity} = action.payload;
+            if (!cart[sku.skuID]) {
+                // TODO: fix the id compare.
+                cart[sku.skuID] = {
+                    name: state.products.filter(item=> item.productID == sku.productID)[0].productName|| 'No name',
+                    sku: {...sku},
+                    quantity: quantity
+                }
+            } else {
+                cart[sku.skuID].quantity += quantity;
+            }
+            if (cart[sku.skuID].quantity === 0) {
+                cart[sku.skuID] = undefined;
+            }
+            return Object.assign({}, state, {cart});
         default:
             return Object.assign({}, state);
     }

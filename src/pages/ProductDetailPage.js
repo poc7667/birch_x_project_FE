@@ -11,6 +11,7 @@ const ProductDetailPage = () => {
     const {products, activeProduct, activeProduct: {productName, description, skus}} = storeState;
     const [selectedSku, setSelectedSku] = useState(null);
     const [numOfSelectedSku, setNumOfSelectedSku] = useState(0);
+    const [submitDisabled, setSubmitDisabled] = useState(false);
     const {loading, setLoading} = useState(storeState.isLoading);
 
 
@@ -52,6 +53,9 @@ const ProductDetailPage = () => {
         setNumOfSelectedSku(delta+numOfSelectedSku);
     }
 
+    const addItemToCartHandler = () =>{
+        dispatch({type: 'addItemToCart', payload:{sku: selectedSku, quantity: numOfSelectedSku}})
+    }
 
     if (loading || !selectedSku) {
         return (<div>
@@ -117,8 +121,13 @@ const ProductDetailPage = () => {
                     </div>
                     {/*end row*/}
                     <div className="mt-4 pt-2">
-                        {/*<a href="javascript:void(0)" className="btn btn-primary">Shop Now</a>*/}
-                        <a href="shop-cart.html" className="btn btn-soft-primary ms-2">Add to Cart</a>
+                        <button onClick={()=>{
+                            addItemToCartHandler()
+                            setSubmitDisabled(true);
+                            setTimeout(()=>{
+                                setSubmitDisabled(false);
+                            },1500)
+                        }} className="btn btn-soft-primary ms-2" disabled={!numOfSelectedSku||submitDisabled}>Add to Cart</button>
                     </div>
                 </div>
             </div>

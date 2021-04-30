@@ -8,8 +8,6 @@ const ProductSlides = (props) => {
     const skuIDs = skus?.map(item => item.skuID) || []
 
     useEffect(() => {
-        console.log(activeSkuID)
-        console.log(skus)
         if (activeSkuID) {
             setCurrentIndex(skuIDs.indexOf(activeSkuID))
         }

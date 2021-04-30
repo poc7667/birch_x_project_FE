@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { StoreContext } from "../App";
+import Cart from "./Cart";
 
 const Header = () => {
+    const {storeState: {activeSkuID, cart}} = useContext(StoreContext);
+    const [expandCart, setExpandCart] = useState(false);
     return (
         <header id="topnav" className="defaultscroll sticky">
             <div className="container">
@@ -27,51 +32,12 @@ const Header = () => {
                     </li>
                     <li className="list-inline-item mb-0 pe-1">
                         <div className="dropdown">
-                            <button type="button" className="btn btn-icon btn-soft-primary dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                            <button onClick={() => {
+                                setExpandCart(!expandCart)
+                            }} type="button" className="btn btn-icon btn-soft-primary dropdown-toggle"
+                            ><i
                                 className="uil uil-shopping-cart align-middle icons"/></button>
-                            <div
-                                className="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 p-4"
-                                style={{width: 300}}>
-                                <div className="pb-4">
-                                    <a href="javascript:void(0)" className="d-flex align-items-center">
-                                        <img src="images/shop/product/s-1.jpg" className="shadow rounded"
-                                             style={{maxHeight: 64}} alt/>
-                                        <div className="flex-1 text-start ms-3">
-                                            <h6 className="text-dark mb-0">T-shirt (M)</h6>
-                                            <p className="text-muted mb-0">$320 X 2</p>
-                                        </div>
-                                        <h6 className="text-dark mb-0">$640</h6>
-                                    </a>
-                                    <a href="javascript:void(0)" className="d-flex align-items-center mt-4">
-                                        <img src="images/shop/product/s-2.jpg" className="shadow rounded"
-                                             style={{maxHeight: 64}} alt/>
-                                        <div className="flex-1 text-start ms-3">
-                                            <h6 className="text-dark mb-0">Bag</h6>
-                                            <p className="text-muted mb-0">$50 X 5</p>
-                                        </div>
-                                        <h6 className="text-dark mb-0">$250</h6>
-                                    </a>
-                                    <a href="javascript:void(0)" className="d-flex align-items-center mt-4">
-                                        <img src="images/shop/product/s-3.jpg" className="shadow rounded"
-                                             style={{maxHeight: 64}} alt/>
-                                        <div className="flex-1 text-start ms-3">
-                                            <h6 className="text-dark mb-0">Watch (Men)</h6>
-                                            <p className="text-muted mb-0">$800 X 1</p>
-                                        </div>
-                                        <h6 className="text-dark mb-0">$800</h6>
-                                    </a>
-                                </div>
-                                <div className="d-flex align-items-center justify-content-between pt-4 border-top">
-                                    <h6 className="text-dark mb-0">Total($):</h6>
-                                    <h6 className="text-dark mb-0">$1690</h6>
-                                </div>
-                                <div className="mt-3 text-center">
-                                    <a href="javascript:void(0)" className="btn btn-primary me-2">View Cart</a>
-                                    <a href="javascript:void(0)" className="btn btn-primary">Checkout</a>
-                                </div>
-                                <p className="text-muted text-start mt-1 mb-0">*T&amp;C Apply</p>
-                            </div>
+                            {expandCart && <Cart cart={cart}></Cart>}
                         </div>
                     </li>
                     <li className="list-inline-item mb-0 pe-1">
