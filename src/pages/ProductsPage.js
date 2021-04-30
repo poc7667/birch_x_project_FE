@@ -1,10 +1,12 @@
 import { useContext, useReducer, useState } from "react";
 import ProductGrid from "../components/productGrid";
-import { StoreContext } from "../App";
+import { StoreContext } from "../store/storeReducer";
 
 const ProductsPage = () => {
-    const {storeState, dispatch} = useContext(StoreContext);
-
+    const {storeState: {products, skus}} = useContext(StoreContext);
+    if (!Object.values(skus).length) {
+        return (<></>);
+    }
     return (
         <>
             <div className="row">
@@ -15,7 +17,11 @@ const ProductsPage = () => {
             </div>
             <div className="row">
                 {
-                    storeState.products.map(product => <ProductGrid product={product}/>)
+                    products.map(product => {
+                        return (
+                            <ProductGrid product={product} skus={skus[product.ID]}/>
+                        )
+                    })
                 }
             </div>
         </>

@@ -1,4 +1,4 @@
 export const Constants = {
-    SERVER_URL: 'http://localhost:8000',
+    SERVER_URL: 'https://323087b077be.ngrok.io',
     DISCOUNT: 0.8
 }

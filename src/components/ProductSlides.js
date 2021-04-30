@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { StoreContext } from "../App";
+import { StoreContext } from "../store/storeReducer";
 
 const ProductSlides = (props) => {
     const {storeState: {activeSkuID}} = useContext(StoreContext);
-    const {skus} = props
+    const {activeProduct, skus} = props
     const [currentIndex, setCurrentIndex] = useState(0)
-    const skuIDs = skus?.map(item => item.skuID) || []
-
+    const skuIDs = skus?.map(item => item.ID) || []
     useEffect(() => {
         if (activeSkuID) {
             setCurrentIndex(skuIDs.indexOf(activeSkuID))
@@ -38,7 +37,7 @@ const ProductSlides = (props) => {
                     {
                         skus?.map((sku, index) => {
                             return (
-                                <button key={`${sku.skuID}-image`}
+                                <button key={`product-${index}-image`}
                                         type="button"
                                         data-nav={index}
                                         aria-controls="tns1"

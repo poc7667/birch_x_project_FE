@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import { StoreContext } from "../App";
 import Cart from "./Cart";
+import { StoreContext } from "../store/storeReducer";
 
 const Header = () => {
     const {storeState: {activeSkuID, cart}} = useContext(StoreContext);
@@ -11,7 +11,7 @@ const Header = () => {
             <div className="container">
                 {/* Logo container*/}
                 <Link className="logo" to="/">
-                    <img src="/images/ucsc.png" height={24} className="logo-light-mode" alt/>
+                    <img src="/images/ucsc.png" height={24} className="logo-light-mode"/>
                 </Link>
                 <ul className="buy-button list-inline mb-0">
                     <li className="list-inline-item mb-0">
@@ -39,10 +39,6 @@ const Header = () => {
                                 className="uil uil-shopping-cart align-middle icons"/></button>
                             {expandCart && <Cart cart={cart}></Cart>}
                         </div>
-                    </li>
-                    <li className="list-inline-item mb-0 pe-1">
-                        <a href="#" className="btn btn-icon btn-soft-primary" data-bs-toggle="modal"
-                           data-bs-target="#wishlist"><i className="uil uil-heart align-middle icons"/></a>
                     </li>
                     <li className="list-inline-item mb-0">
                         <div className="dropdown dropdown-primary">
