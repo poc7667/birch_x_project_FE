@@ -42,7 +42,8 @@ export const initialStoreState = {
     products: [],
     skus:{},
     reviews: {},
-    cart: {}
+    cart: {},
+    shippingCost: 10
 }
 
 initialStoreState.PropTypes = {
@@ -55,5 +56,6 @@ initialStoreState.PropTypes = {
     products: PropTypes.arrayOf(ProductPropType),
     skus: PropTypes.objectOf(PropTypes.arrayOf(SkuPropType)),
     reviews: PropTypes.objectOf(PropTypes.arrayOf(ReviewPropType)),
-    cart: CartPropType
+    cart: CartPropType,
+    shippingCost: PropTypes.number
 }

@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
 import { StoreContext } from "../store/storeReducer";
+import { func } from "prop-types";
 
 const Header = () => {
     const {storeState: {activeSkuID, cart}} = useContext(StoreContext);
     const [expandCart, setExpandCart] = useState(false);
+
+    function setExpandCartHandler(value) {
+        setExpandCart(value);
+    }
+
     return (
         <header id="topnav" className="defaultscroll sticky">
             <div className="container">
@@ -35,9 +41,11 @@ const Header = () => {
                             <button onClick={() => {
                                 setExpandCart(!expandCart)
                             }} type="button" className="btn btn-icon btn-soft-primary dropdown-toggle"
+                                    disabled={Object.keys(cart).length===0}
                             ><i
                                 className="uil uil-shopping-cart align-middle icons"/></button>
-                            {expandCart && <Cart cart={cart}></Cart>}
+                            <Cart setExpandCartHandler={setExpandCartHandler} expandCart={expandCart}
+                                  cart={cart}></Cart>
                         </div>
                     </li>
                     <li className="list-inline-item mb-0">

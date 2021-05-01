@@ -8,6 +8,7 @@ import Action from "./constants/Action";
 import { initialStoreState } from "./store/storeStates";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import CheckoutPage from "./pages/Checkout";
 
 function App() {
     const [storeState, dispatch] = useReducer(storeReducer, initialStoreState)
@@ -29,6 +30,8 @@ function App() {
                     }}></Route>
                     <Route exact path="/products" component={ProductsPage}></Route>
                     <Route exact path="/products/:productId" component={ProductDetailPage}></Route>
+                    <Route exact path="/checkout" component={CheckoutPage}></Route>
+
                 </Switch>
             </StoreLayout>
         </StoreContext.Provider>

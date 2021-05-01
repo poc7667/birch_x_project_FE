@@ -5,6 +5,7 @@ import SkuItems from "../components/SkuItems";
 import { Constants } from "../Constants";
 import { StoreContext } from "../store/storeReducer";
 import Action from "../constants/Action";
+import ProductReviews from "../components/ProductReviews";
 
 const ProductDetailPage = () => {
     const {productId} = useParams();
@@ -27,21 +28,14 @@ const ProductDetailPage = () => {
     }
 
     useEffect(() => {
-        if (currentProductSkus) {
-            updateSelectedSkuHandler(currentProductSkus[0]);
-        }
-    }, [currentProductSkus])
-
-
-    useEffect(() => {
+        dispatch({type: Action.clearActiveSku, payload: null})
         if (products) {
             dispatch({type: Action.loadProduct, payload: productId})
         }
-    }, [products])
-
-    useEffect(() => {
-        dispatch({type: Action.clearActiveSku, payload: null})
-    }, [])
+        if (currentProductSkus) {
+            updateSelectedSkuHandler(currentProductSkus[0]);
+        }
+    }, [currentProductSkus, products])
 
     useEffect(() => {
 
@@ -110,6 +104,7 @@ const ProductDetailPage = () => {
                                            max={selectedSku?.stock}
                                            name="quantity"
                                            value={numOfSelectedSku}
+                                           onChange={()=>{}}
                                            type="number"
                                            className="btn btn-icon btn-soft-primary qty-btn quantity"/>
                                     <button onClick={() => {
@@ -136,6 +131,7 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
+            <ProductReviews/>
             {/*end col*/}
         </div>
     )
