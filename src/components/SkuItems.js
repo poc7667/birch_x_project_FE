@@ -13,22 +13,18 @@ const SkuItems = (props) => {
                     productID,
                     image,
                     ID,
-                    size,
-                    color,
-                    style,
+                    title,
                     price,
                     stock
                 } = item;
-                const title = [color, size, style].filter(i => i?.length).join("/ ") || 'Current'
-                if (title) {
-                    return {
-                        productID,
-                        image,
-                        ID,
-                        title,
-                        price,
-                        stock
-                    }
+
+                return {
+                    productID,
+                    image,
+                    ID,
+                    title,
+                    price,
+                    stock
                 }
             }))
         }

@@ -1,19 +1,17 @@
 import { useContext, useEffect, useReducer, useState } from "react";
-import ProductGrid from "../components/productGrid";
 import { StoreContext } from "../store/storeReducer";
-import Cart from "../components/Cart";
 import CartContent from "../components/CartContent";
+import useCartSubtotal from "../hooks/useCartSubtotal";
 
 const CheckoutPage = () => {
     const {storeState: {shippingCost, cart}} = useContext(StoreContext);
-    const [subTotal, setSubTotal] = useState(0);
+    const [subtotal, setSubtotal] = useCartSubtotal();
     const [cartItems, setCartItems] = useState(null);
 
     useEffect(() => {
         if (Object.values(cart).length) {
             setCartItems(Object.values(cart));
-            const sumOfItems = Object.values(cart).reduce((sum, currItem) => currItem.sku.price * currItem.quantity + sum, 0);
-            setSubTotal(sumOfItems);
+            setSubtotal(Object.values(cart));
         }
     }, [cart]);
 
@@ -153,7 +151,7 @@ const CheckoutPage = () => {
                                         <tbody>
                                         <tr>
                                             <td className="h6 border-0">Subtotal</td>
-                                            <td className="text-end fw-bold border-0">$ {subTotal.toFixed(2)}</td>
+                                            <td className="text-end fw-bold border-0">$ {subtotal.toFixed(2)}</td>
                                         </tr>
                                         <tr>
                                             <td className="h6">Shipping Charge</td>
@@ -161,7 +159,7 @@ const CheckoutPage = () => {
                                         </tr>
                                         <tr className="bg-light">
                                             <td className="h5 fw-bold">Total</td>
-                                            <td className="text-end text-primary h4 fw-bold">$ {(subTotal + shippingCost).toFixed(2)}</td>
+                                            <td className="text-end text-primary h4 fw-bold">$ {(subtotal + shippingCost).toFixed(2)}</td>
                                         </tr>
                                         </tbody>
                                     </table>

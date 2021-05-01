@@ -10,7 +10,7 @@ import ProductReviews from "../components/ProductReviews";
 const ProductDetailPage = () => {
     const {productId} = useParams();
     const {storeState, dispatch} = useContext(StoreContext);
-    const {products, activeProduct, activeProduct: {productName, description}, skus} = storeState;
+    const {products, activeProduct, activeProduct: {productName, description}, skus, reviews} = storeState;
     const [selectedSku, setSelectedSku] = useState(null);
     const [numOfSelectedSku, setNumOfSelectedSku] = useState(0);
     const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -38,11 +38,23 @@ const ProductDetailPage = () => {
     }, [currentProductSkus, products])
 
     useEffect(() => {
-
         if (selectedSku && numOfSelectedSku > selectedSku.stock) {
             setNumOfSelectedSku(selectedSku.stock)
         }
     }, [selectedSku])
+
+    /**
+     * Update stock
+     */
+    useEffect(() => {
+        if (Array.isArray(currentProductSkus) && selectedSku){
+            currentProductSkus.forEach(item =>{
+                if(item.ID === selectedSku.ID && item.stock !== selectedSku.stock) {
+                    updateSelectedSkuHandler(item);
+                }
+            })
+        }
+    },[skus])
 
 
     const updateNumOfSelectedSku = (delta) => {
@@ -83,11 +95,15 @@ const ProductDetailPage = () => {
                     <p className="text-muted">{description}</p>
                     <ul className="list-unstyled text-muted">
                     </ul>
+                    {Object.keys(currentProductSkus).length > 1 &&
                     <div className="row mt-4 pt-2">
                         <div className="col-lg-12 col-12">
-                            <SkuItems updateSelectedSkuHandler={updateSelectedSkuHandler} activeProduct={activeProduct} skus={currentProductSkus}/>
+                            <SkuItems updateSelectedSkuHandler={updateSelectedSkuHandler} activeProduct={activeProduct}
+                                      skus={currentProductSkus}/>
                         </div>
                     </div>
+                    }
+
                     <div className="row mt-4 pt-2">
 
                         {/*end col*/}
@@ -104,7 +120,8 @@ const ProductDetailPage = () => {
                                            max={selectedSku?.stock}
                                            name="quantity"
                                            value={numOfSelectedSku}
-                                           onChange={()=>{}}
+                                           onChange={() => {
+                                           }}
                                            type="number"
                                            className="btn btn-icon btn-soft-primary qty-btn quantity"/>
                                     <button onClick={() => {
@@ -113,10 +130,23 @@ const ProductDetailPage = () => {
                                             className="btn btn-icon btn-soft-primary plus">+
                                     </button>
                                 </div>
+
                             </div>
                         </div>
+
                         {/*end col*/}
                     </div>
+                    <div className="row mt-4 pt-2">
+                        <div className="col-lg-6 col-12 mt-4 mt-lg-0">
+                            <div className="d-flex shop-list align-items-center">
+                                <h6 className="mb-0">Stock:</h6>
+                                <div className="qty-icons ms-3">
+                                    {selectedSku.stock}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/*end row*/}
                     <div className="mt-4 pt-2">
                         <button onClick={() => {
@@ -131,7 +161,7 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <ProductReviews/>
+            <ProductReviews selectedSku={selectedSku} productSkus={skus[productId]} productReviews={reviews[productId]}/>
             {/*end col*/}
         </div>
     )

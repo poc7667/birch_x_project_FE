@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CartContent from "./CartContent";
+import useCartSubtotal from "../hooks/useCartSubtotal";
 
 const Cart = (props) => {
     const {cart, expandCart, setExpandCartHandler} = props;
+    const [subtotal, setSubtotal] = useCartSubtotal();
+    const [cartItems, setCartItems] = useState();
 
     /**
      * Handle click outside
@@ -27,11 +30,16 @@ const Cart = (props) => {
         };
     }, [cartRef]);
 
+    useEffect(() => {
+        if (Object.values(cart)){
+            setCartItems(Object.values(cart));
+            setSubtotal(Object.values(cart));
+        }
+    }, [cart])
+
     if (!Object.keys(cart).length) {
         return <></>;
     }
-
-    const cartItems = Object.values(cart);
     return (
         <div
             ref={cartRef}
@@ -40,13 +48,11 @@ const Cart = (props) => {
             <CartContent cartItems={cartItems}></CartContent>
             <div className="d-flex align-items-center justify-content-between pt-4 border-top">
                 <h6 className="text-dark mb-0">Total($):</h6>
-                <h6 className="text-dark mb-0">${  }</h6>
+                <h6 className="text-dark mb-0">${ subtotal }</h6>
             </div>
             <div className="mt-3 text-center">
-                {/*<a href="javascript:void(0)" className="btn btn-primary me-2">View Cart</a>*/}
                 <Link to={`/checkout`} onClick={()=>{setExpandCartHandler(false)}}  className="btn btn-primary">Checkout</Link>
             </div>
-            {/*<p className="text-muted text-start mt-1 mb-0">*T&amp;C Apply</p>*/}
         </div>
     )
 }

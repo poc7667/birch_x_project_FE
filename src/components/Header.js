@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
 import { StoreContext } from "../store/storeReducer";
-import { func } from "prop-types";
 
 const Header = () => {
     const {storeState: {activeSkuID, cart}} = useContext(StoreContext);
@@ -13,7 +12,7 @@ const Header = () => {
     }
 
     return (
-        <header id="topnav" className="defaultscroll sticky">
+        <header id="topnav" className="defaultscroll sticky"  style={{background: 'white'}}>
             <div className="container">
                 {/* Logo container*/}
                 <Link className="logo" to="/">
