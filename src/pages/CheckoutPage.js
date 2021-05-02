@@ -1,12 +1,16 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/storeReducer";
 import CartContent from "../components/CartContent";
 import useCartSubtotal from "../hooks/useCartSubtotal";
+import { Link, useHistory } from "react-router-dom";
+import { Constants } from "../Constants";
 
 const CheckoutPage = () => {
     const {storeState: {shippingCost, cart}} = useContext(StoreContext);
     const [subtotal, setSubtotal] = useCartSubtotal();
     const [cartItems, setCartItems] = useState(null);
+    const [user, setUser] = useState({});
+    const history = useHistory();
 
     useEffect(() => {
         if (Object.values(cart).length) {
@@ -17,6 +21,31 @@ const CheckoutPage = () => {
 
     if (!cartItems) {
         return (<></>);
+    }
+
+    const submitOrderHandler = async () =>{
+        /**
+         * 1. clear cart.
+         * 2. submit order
+         * 3. ok: show success
+         * 4. fail: show failed.
+         */
+        const skuResponse = await fetch(Constants.SERVER_URL + '/skus').then(data => data.json());
+
+        const response = await fetch(Constants.SERVER_URL + '/orders', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json, text/plain, */*',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify({
+                user,
+                items: cartItems
+            }) // body data type must match "Content-Type" header
+        });
+        history.push('/orders/1');
     }
 
     return (
@@ -165,7 +194,7 @@ const CheckoutPage = () => {
                                     </table>
                                     <div className="mt-4 pt-2">
                                         <div className="d-grid">
-                                            <a href="shop-checkouts.html" className="btn btn-primary">Place Order</a>
+                                            <button onClick={()=>{submitOrderHandler()}} className="btn btn-primary">Place Order</button>
                                         </div>
                                     </div>
                                 </div>

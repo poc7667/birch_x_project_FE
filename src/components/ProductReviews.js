@@ -11,7 +11,7 @@ const ProductReviews = (props) => {
     const [reviewComment, setReviewComment] = useInput();
     const [email, setEmail] = useInput();
     const [name, setName] = useInput();
-    
+
     useEffect(() => {
         if (reviewScore >= 0) {
             setReviewEnabled(true);
