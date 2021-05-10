@@ -18,9 +18,9 @@ function App() {
         const productsResponse = await fetch(Constants.SERVER_URL + '/products').then(data => data.json());
         const skuResponse = await fetch(Constants.SERVER_URL + '/skus').then(data => data.json());
         const reviewsResponse = await fetch(Constants.SERVER_URL + '/reviews').then(data => data.json());
-        dispatch({type: Action.loadProducts, payload: productsResponse});
+        await dispatch({type: Action.loadProducts, payload: productsResponse});
         await dispatch({type: Action.loadSkus, payload: skuResponse});
-        dispatch({type: Action.loadReviews, payload: reviewsResponse});
+        await dispatch({type: Action.loadReviews, payload: reviewsResponse});
     }), []);
 
     const history = useHistory();

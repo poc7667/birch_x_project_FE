@@ -24,7 +24,8 @@ const ProductDetailPage = () => {
      */
     const updateSelectedSkuHandler = (sku) => {
         setSelectedSku(sku);
-        dispatch({type: Action.selectSku, payload: {activeSkuID: sku.ID}})
+        console.log(sku);
+        dispatch({type: Action.selectSku, payload: {activeSkuId: sku.id}})
     }
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const ProductDetailPage = () => {
         if (products) {
             dispatch({type: Action.loadProduct, payload: productId})
         }
-        if (currentProductSkus) {
+        if (currentProductSkus?.length > 0) {
             updateSelectedSkuHandler(currentProductSkus[0]);
         }
     }, [currentProductSkus, products])
@@ -47,14 +48,14 @@ const ProductDetailPage = () => {
      * Update stock
      */
     useEffect(() => {
-        if (Array.isArray(currentProductSkus) && selectedSku){
-            currentProductSkus.forEach(item =>{
-                if(item.ID === selectedSku.ID && item.stock !== selectedSku.stock) {
+        if (Array.isArray(currentProductSkus) && selectedSku) {
+            currentProductSkus.forEach(item => {
+                if (item.id === selectedSku.id && item.stock !== selectedSku.stock) {
                     updateSelectedSkuHandler(item);
                 }
             })
         }
-    },[skus])
+    }, [skus])
 
 
     const updateNumOfSelectedSku = (delta) => {
@@ -161,7 +162,8 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <ProductReviews selectedSku={selectedSku} productSkus={skus[productId]} productReviews={reviews[productId]}/>
+            <ProductReviews selectedSku={selectedSku} productSkus={skus[productId]}
+                            productReviews={reviews[productId]}/>
             {/*end col*/}
         </div>
     )

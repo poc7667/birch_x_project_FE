@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ProductGrid = ({product, skus}) => {
     const {
-        ID,
+        id,
         productName
     } = product || {};
     const {image, price} = skus[0];
@@ -18,7 +18,7 @@ const ProductGrid = ({product, skus}) => {
                     backgroundRepeat: 'no-repeat'
                 }}>
                     <Link
-                        to={`/products/${ID}`}
+                        to={`/products/${id}`}
                     >
                         <img src={`${image}`} className="img-fluid" alt/>
                     </Link>
@@ -26,7 +26,7 @@ const ProductGrid = ({product, skus}) => {
                 <div className="card-body content pt-4 p-2">
                     <Link
                         className="text-dark product-name h6"
-                        to={`/products/${ID}`}
+                        to={`/products/${id}`}
                     >
                         {productName}
                     </Link>

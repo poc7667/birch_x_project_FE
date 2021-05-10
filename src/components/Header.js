@@ -4,7 +4,7 @@ import Cart from "./Cart";
 import { StoreContext } from "../store/storeReducer";
 
 const Header = () => {
-    const {storeState: {activeSkuID, cart}} = useContext(StoreContext);
+    const {storeState: {activeSkuId, cart}} = useContext(StoreContext);
     const [expandCart, setExpandCart] = useState(false);
 
     function setExpandCartHandler(value) {

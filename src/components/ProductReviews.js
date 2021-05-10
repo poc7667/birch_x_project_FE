@@ -26,8 +26,8 @@ const ProductReviews = (props) => {
         console.log([name, email, reviewComment])
         dispatch({
             type: Action.addReview, payload: {
-                productID: selectedSku.productID,
-                skuID: selectedSku.ID,
+                productId: selectedSku.productId,
+                skuID: selectedSku.id,
                 score: reviewScore+1,
                 comment: reviewComment,
                 email,
@@ -54,7 +54,7 @@ const ProductReviews = (props) => {
                                     <ul className="media-list list-unstyled mb-0">
                                         {productReviews.map(review => {
                                             return (
-                                                <li>
+                                                <li  key={`review-star-li-${review.id}`}>
                                                     <div className="d-flex justify-content-between">
                                                         <div className="d-flex align-items-center">
 
@@ -69,8 +69,7 @@ const ProductReviews = (props) => {
                                                         <ul className="list-unstyled mb-0">
                                                             {[...Array(review.score)].map((_, index) => {
                                                                 return (
-                                                                    <li className="list-inline-item"
-                                                                        key={`star-${index}`}><i
+                                                                    <li className="list-inline-item"><i
                                                                         className="mdi mdi-star text-warning"/></li>
                                                                 )
                                                             })}
