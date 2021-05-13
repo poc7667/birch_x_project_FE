@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const ProductGrid = ({product, skus}) => {
     const {
         id,
-        productName
+        name
     } = product || {};
     const {image, price} = skus[0];
     return (
@@ -28,7 +28,7 @@ const ProductGrid = ({product, skus}) => {
                         className="text-dark product-name h6"
                         to={`/products/${id}`}
                     >
-                        {productName}
+                        {name}
                     </Link>
                     <div className="d-flex justify-content-between mt-1">
                         <h6 className="text-muted small fst-italic mb-0 mt-1">$ {price}

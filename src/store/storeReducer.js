@@ -10,7 +10,6 @@ export function storeReducer(state, action) {
     switch (action.type) {
         case Action.loadProducts:
             products = action.payload.reduce((products, product) => {
-                product.id = product.ID;
                 product.hasSkus = false;
                 products[product.id] = product;
                 return products;
@@ -59,7 +58,7 @@ export function storeReducer(state, action) {
             const product = state.products[sku.productId];
             if (!cart[sku.id]) {
                 cart[sku.id] = {
-                    name: product?.productName || 'No name',
+                    name: product?.name || 'No name',
                     sku: {...sku},
                     quantity: quantity
                 }

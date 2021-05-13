@@ -10,7 +10,7 @@ import ProductReviews from "../components/ProductReviews";
 const ProductDetailPage = () => {
     const {productId} = useParams();
     const {storeState, dispatch} = useContext(StoreContext);
-    const {products, activeProduct, activeProduct: {productName, description}, skus, reviews} = storeState;
+    const {products, activeProduct, activeProduct: {name, description}, skus, reviews} = storeState;
     const [selectedSku, setSelectedSku] = useState(null);
     const [numOfSelectedSku, setNumOfSelectedSku] = useState(0);
     const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -81,7 +81,7 @@ const ProductDetailPage = () => {
             {/*end col*/}
             <div className="col-md-7 mt-4 mt-sm-0 pt-2 pt-sm-0">
                 <div className="section-title ms-md-4">
-                    <h4 className="title"> {productName} </h4>
+                    <h4 className="title"> {name} </h4>
                     <h5 className="text-muted">${selectedSku.price}
                         <del className="text-danger ms-2">$ {(selectedSku.price / Constants.DISCOUNT).toFixed(2)}</del>
                     </h5>

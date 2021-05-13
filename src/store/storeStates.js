@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 const ProductPropType = {
     id: PropTypes.string.isRequired,
-    productName: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    lowestPrice: PropTypes.number.isRequired,
+    minPrice: PropTypes.number.isRequired,
+    image: PropTypes.string,
     hasSkus: PropTypes.bool
 }
 
