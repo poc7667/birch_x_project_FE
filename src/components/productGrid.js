@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 const ProductGrid = ({product, skus}) => {
     const {
         id,
-        name
+        name,
+        reviewScore
     } = product || {};
     const {image, price} = skus[0];
     return (
@@ -36,6 +37,11 @@ const ProductGrid = ({product, skus}) => {
                                 className="text-danger ms-2">$ {(price / Constants.DISCOUNT).toFixed(0)}</del>
                         </h6>
                     </div>
+                    <ul className="list-unstyled text-warning h5 mb-0">
+                        {
+                            [...new Array(parseInt(reviewScore))].map(()=><li className="list-inline-item"><i className="mdi mdi-star"/></li>)
+                        }
+                    </ul>
                 </div>
             </div>
         </div>

@@ -49,7 +49,6 @@ const SkuItems = (props) => {
                         )
                     })
                 }
-
             </ul>
         </div>
     )

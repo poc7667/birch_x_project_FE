@@ -10,7 +10,7 @@ import ProductReviews from "../components/ProductReviews";
 const ProductDetailPage = () => {
     const {productId} = useParams();
     const {storeState, dispatch} = useContext(StoreContext);
-    const {products, activeProduct, activeProduct: {name, description}, skus, reviews} = storeState;
+    const {products, activeProduct, activeProduct: {name, description, reviewScore}, skus, reviews} = storeState;
     const [selectedSku, setSelectedSku] = useState(null);
     const [numOfSelectedSku, setNumOfSelectedSku] = useState(0);
     const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -86,11 +86,9 @@ const ProductDetailPage = () => {
                         <del className="text-danger ms-2">$ {(selectedSku.price / Constants.DISCOUNT).toFixed(2)}</del>
                     </h5>
                     <ul className="list-unstyled text-warning h5 mb-0">
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
+                        {
+                            [...new Array(parseInt(reviewScore))].map(()=><li className="list-inline-item"><i className="mdi mdi-star"/></li>)
+                        }
                     </ul>
                     <h5 className="mt-4 py-2">Overview :</h5>
                     <p className="text-muted">{description}</p>

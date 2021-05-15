@@ -21,6 +21,7 @@ export function storeReducer(state, action) {
         case Action.loadSkus:
             action.payload.forEach(skuItem => {
                 const {
+                    id,
                     product: productId,
                     size,
                     color,
@@ -28,21 +29,16 @@ export function storeReducer(state, action) {
                 } = skuItem;
                 // Normalize
                 skuItem.productId = productId
-                // skuItem.product = undefined;
                 /**
                  * Add dummy title
                  */
                 if (!skus[productId]) {
                     skus[productId] = []
-                    if (products[productId]) {
-                        products[productId].hasSkus = false;
-                    }
-                } else {
-                    skuItem.title = [color, size, style].filter(i => i?.length).join("/ ") || ''
-                    skus[productId].push({...skuItem});
-                    if (products[productId]) {
-                        products[productId].hasSkus = true;
-                    }
+                }
+                skuItem.title = [color, size, style].filter(i => i?.length).join("/ ") || ''
+                skus[productId].push({...skuItem});
+                if (products[productId]) {
+                    products[productId].hasSkus = true;
                 }
             })
             return Object.assign({}, state, {skus: skus, products: products});
