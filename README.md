@@ -14,11 +14,12 @@
 
 ## 2021-05-16
 
+
 # 如何更新 front-end (React)
 
 - 打開 terminal
 - git clone git@github.com:poc7667/birch_x_project_FE.git
-- git checkout main (switch to correct folder)
+- git checkout master (switch to correct folder)
 - yarn install (install needed packages)
 - npm start (run server)
 
