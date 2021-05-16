@@ -6,6 +6,7 @@ import { Constants } from "../Constants";
 import { StoreContext } from "../store/storeReducer";
 import Action from "../constants/Action";
 import ProductReviews from "../components/ProductReviews";
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductDetailPage = () => {
     const {productId} = useParams();
@@ -87,7 +88,7 @@ const ProductDetailPage = () => {
                     </h5>
                     <ul className="list-unstyled text-warning h5 mb-0">
                         {
-                            [...new Array(parseInt(reviewScore))].map(()=><li className="list-inline-item"><i className="mdi mdi-star"/></li>)
+                            [...new Array(parseInt(reviewScore))].map(()=><li className="list-inline-item" key={uuidv4()}><i className="mdi mdi-star"/></li>)
                         }
                     </ul>
                     <h5 className="mt-4 py-2">Overview :</h5>

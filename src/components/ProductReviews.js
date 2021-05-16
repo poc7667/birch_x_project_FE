@@ -2,7 +2,7 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import useInput from "../hooks/useInput";
 import Action from "../constants/Action";
 import { StoreContext, storeReducer } from "../store/storeReducer";
-
+import { v4 as uuidv4 } from 'uuid';
 const ProductReviews = (props) => {
     const {dispatch} = useContext(StoreContext);
     const {productReviews, selectedSku} = props;
@@ -19,8 +19,6 @@ const ProductReviews = (props) => {
             setReviewEnabled(false);
         }
     }, [reviewScore])
-    
-
 
     const submitReviewHandler = () => {
         console.log([name, email, reviewComment])
@@ -54,10 +52,9 @@ const ProductReviews = (props) => {
                                     <ul className="media-list list-unstyled mb-0">
                                         {productReviews.map(review => {
                                             return (
-                                                <li  key={`review-star-li-${review.id}`}>
+                                                <li  key={`review-star-li-${review.id}-${uuidv4()}`}>
                                                     <div className="d-flex justify-content-between">
                                                         <div className="d-flex align-items-center">
-
                                                             <div className="flex-1 commentor-detail">
                                                                 {review?.title &&
                                                                 <small
@@ -69,7 +66,7 @@ const ProductReviews = (props) => {
                                                         <ul className="list-unstyled mb-0">
                                                             {[...Array(review.score)].map((_, index) => {
                                                                 return (
-                                                                    <li className="list-inline-item"><i
+                                                                    <li className="list-inline-item" key={uuidv4()}><i
                                                                         className="mdi mdi-star text-warning"/></li>
                                                                 )
                                                             })}
@@ -96,7 +93,7 @@ const ProductReviews = (props) => {
                                                 <h6 className="small fw-bold">Your Rating:</h6>
                                                 {[...Array(5)].map((_, numOfStars) => {
                                                     return (
-                                                        <a href={``} onClick={(e) => {
+                                                        <a key={uuidv4()} onClick={(e) => {
                                                             setReviewScore(numOfStars)
                                                             e.preventDefault()
                                                         }}
@@ -104,11 +101,11 @@ const ProductReviews = (props) => {
                                                             <ul className="list-unstyled mb-0 small">
                                                                 {[...Array(5)].map((_, index) => {
                                                                     if (index <= numOfStars) {
-                                                                        return <li className="list-inline-item"><i
+                                                                        return <li className="list-inline-item" key={uuidv4()}><i
                                                                             className="mdi mdi-star text-warning"/>
                                                                         </li>;
                                                                     }
-                                                                    return <li className="list-inline-item"><i
+                                                                    return <li className="list-inline-item" key={uuidv4()}><i
                                                                         className="mdi mdi-star-outline  text-warning"/>
                                                                     </li>;
                                                                 })}
@@ -138,7 +135,7 @@ const ProductReviews = (props) => {
                                                                   value={reviewComment}
                                                                   onChange={(e) => setReviewComment(e)}
                                                                   name="message" className="form-control ps-5" required
-                                                                  defaultValue={""}/>
+                                                                  />
                                                     </div>
                                                 </div>
                                             </div>

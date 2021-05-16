@@ -93,6 +93,10 @@ export function storeReducer(state, action) {
             newReviews.title = state.skus[newReviews.productId].filter(sku => sku.id === newReviews.skuID)[0].title;
             reviews[action.payload.productId].push(newReviews);
             return Object.assign({}, state, {reviews});
+        case Action.loadCustomers:
+            return Object.assign({}, state, {user:action.payload?.[0]});
+        case Action.logout:
+            return Object.assign({}, state, {user:{}});
         default:
             return Object.assign({}, state);
     }

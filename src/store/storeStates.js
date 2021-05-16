@@ -36,6 +36,12 @@ const CartPropType = {
     quantity: PropTypes.number.isRequired
 };
 
+const CustomerPropType = {
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    phone: PropTypes.string,
+    email: PropTypes.string,
+};
 
 export const initialStoreState = {
     isLoading: true,
@@ -60,5 +66,6 @@ initialStoreState.PropTypes = {
     skus: PropTypes.objectOf(PropTypes.arrayOf(SkuPropType)),
     reviews: PropTypes.objectOf(PropTypes.arrayOf(ReviewPropType)),
     cart: CartPropType,
+    customers: PropTypes.arrayOf(CustomerPropType),
     shippingCost: PropTypes.number
 }
