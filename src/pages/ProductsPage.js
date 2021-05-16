@@ -4,9 +4,13 @@ import { StoreContext } from "../store/storeReducer";
 
 const ProductsPage = () => {
     const {storeState: {products, skus}} = useContext(StoreContext);
-    if (!Object.values(skus).length) {
+
+    if (Object.keys(skus).length === 0) {
+        console.log(skus)
         return (<></>);
     }
+    console.log(products)
+    console.log(skus)
     return (
         <>
             <div className="row">
@@ -17,10 +21,15 @@ const ProductsPage = () => {
             </div>
             <div className="row">
                 {
-                    products.map(product => {
+                    Object.values(products).filter(product=>product.hasSkus).map(product => {
+                        const productSkus = skus[product.id];
+                        if (!productSkus) {
+                            return <></>;
+                        }
                         return (
-                            <ProductGrid product={product} skus={skus[product.ID]}/>
-                        )
+                            <ProductGrid key={`productId-${product.id}`} product={product}
+                                         skus={productSkus}/>
+                        );
                     })
                 }
             </div>

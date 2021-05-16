@@ -6,11 +6,12 @@ import { Constants } from "../Constants";
 import { StoreContext } from "../store/storeReducer";
 import Action from "../constants/Action";
 import ProductReviews from "../components/ProductReviews";
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductDetailPage = () => {
     const {productId} = useParams();
     const {storeState, dispatch} = useContext(StoreContext);
-    const {products, activeProduct, activeProduct: {productName, description}, skus, reviews} = storeState;
+    const {products, activeProduct, activeProduct: {name, description, reviewScore}, skus, reviews} = storeState;
     const [selectedSku, setSelectedSku] = useState(null);
     const [numOfSelectedSku, setNumOfSelectedSku] = useState(0);
     const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -24,7 +25,8 @@ const ProductDetailPage = () => {
      */
     const updateSelectedSkuHandler = (sku) => {
         setSelectedSku(sku);
-        dispatch({type: Action.selectSku, payload: {activeSkuID: sku.ID}})
+        console.log(sku);
+        dispatch({type: Action.selectSku, payload: {activeSkuId: sku.id}})
     }
 
     useEffect(() => {
@@ -32,7 +34,7 @@ const ProductDetailPage = () => {
         if (products) {
             dispatch({type: Action.loadProduct, payload: productId})
         }
-        if (currentProductSkus) {
+        if (currentProductSkus?.length > 0) {
             updateSelectedSkuHandler(currentProductSkus[0]);
         }
     }, [currentProductSkus, products])
@@ -47,14 +49,14 @@ const ProductDetailPage = () => {
      * Update stock
      */
     useEffect(() => {
-        if (Array.isArray(currentProductSkus) && selectedSku){
-            currentProductSkus.forEach(item =>{
-                if(item.ID === selectedSku.ID && item.stock !== selectedSku.stock) {
+        if (Array.isArray(currentProductSkus) && selectedSku) {
+            currentProductSkus.forEach(item => {
+                if (item.id === selectedSku.id && item.stock !== selectedSku.stock) {
                     updateSelectedSkuHandler(item);
                 }
             })
         }
-    },[skus])
+    }, [skus])
 
 
     const updateNumOfSelectedSku = (delta) => {
@@ -80,16 +82,14 @@ const ProductDetailPage = () => {
             {/*end col*/}
             <div className="col-md-7 mt-4 mt-sm-0 pt-2 pt-sm-0">
                 <div className="section-title ms-md-4">
-                    <h4 className="title"> {productName} </h4>
+                    <h4 className="title"> {name} </h4>
                     <h5 className="text-muted">${selectedSku.price}
                         <del className="text-danger ms-2">$ {(selectedSku.price / Constants.DISCOUNT).toFixed(2)}</del>
                     </h5>
                     <ul className="list-unstyled text-warning h5 mb-0">
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
-                        <li className="list-inline-item"><i className="mdi mdi-star"/></li>
+                        {
+                            [...new Array(parseInt(reviewScore))].map(()=><li className="list-inline-item" key={uuidv4()}><i className="mdi mdi-star"/></li>)
+                        }
                     </ul>
                     <h5 className="mt-4 py-2">Overview :</h5>
                     <p className="text-muted">{description}</p>
@@ -161,7 +161,8 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <ProductReviews selectedSku={selectedSku} productSkus={skus[productId]} productReviews={reviews[productId]}/>
+            <ProductReviews selectedSku={selectedSku} productSkus={skus[productId]}
+                            productReviews={reviews[productId]}/>
             {/*end col*/}
         </div>
     )

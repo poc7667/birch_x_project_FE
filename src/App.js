@@ -9,7 +9,11 @@ import { initialStoreState } from "./store/storeStates";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import OrdersPage from "./pages/OrdersPage";
 import OrderPage from "./pages/OrderPage";
+
+import AdminPage from "./pages/AdminPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
     const [storeState, dispatch] = useReducer(storeReducer, initialStoreState)
@@ -18,9 +22,10 @@ function App() {
         const productsResponse = await fetch(Constants.SERVER_URL + '/products').then(data => data.json());
         const skuResponse = await fetch(Constants.SERVER_URL + '/skus').then(data => data.json());
         const reviewsResponse = await fetch(Constants.SERVER_URL + '/reviews').then(data => data.json());
-        dispatch({type: Action.loadProducts, payload: productsResponse});
+
+        await dispatch({type: Action.loadProducts, payload: productsResponse});
         await dispatch({type: Action.loadSkus, payload: skuResponse});
-        dispatch({type: Action.loadReviews, payload: reviewsResponse});
+        await dispatch({type: Action.loadReviews, payload: reviewsResponse});
     }), []);
 
     const history = useHistory();
@@ -31,10 +36,13 @@ function App() {
                     <Route exact path="/" render={() => {
                         history.push('/products');
                     }}></Route>
+                    <Route exact path="/admin" component={AdminPage}></Route>
+                    <Route exact path="/login" component={LoginPage}></Route>
+                    <Route exact path="/orders/:orderId" component={OrderPage}></Route>
+                    <Route exact path="/orders" component={OrdersPage}></Route>
                     <Route exact path="/products" component={ProductsPage}></Route>
                     <Route exact path="/products/:productId" component={ProductDetailPage}></Route>
                     <Route exact path="/checkout" component={CheckoutPage}></Route>
-                    <Route exact path="/orders/:orderId" component={OrderPage}></Route>
                 </Switch>
             </StoreLayout>
         </StoreContext.Provider>

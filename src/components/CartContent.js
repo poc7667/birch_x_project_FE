@@ -5,7 +5,7 @@ const CartContent = (props) => {
             {cartItems.map(item => {
                 const {
                     sku: {
-                        ID,
+                        id,
                         price,
                         image,
                     },
@@ -13,7 +13,7 @@ const CartContent = (props) => {
                     quantity
                 } = item;
                 return (
-                    <div key={`cart-item-${ID}`} className="d-flex align-items-center">
+                    <div key={`cart-item-${id}`} className="d-flex align-items-center">
                         <img src={`${image}`} className="shadow rounded"
                              style={{width: 64, maxHeight: 64}} alt/>
                         <div className="flex-1 text-start ms-3">

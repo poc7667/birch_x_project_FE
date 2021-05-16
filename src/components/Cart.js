@@ -8,27 +8,6 @@ const Cart = (props) => {
     const [subtotal, setSubtotal] = useCartSubtotal();
     const [cartItems, setCartItems] = useState();
 
-    /**
-     * Handle click outside
-     */
-    const cartRef = useRef(null);
-    useEffect(() => {
-        /**
-         * Alert if clicked on outside of element
-         */
-        function handleClickOutside(event) {
-            if (cartRef.current && !cartRef.current.contains(event.target)) {
-                setExpandCartHandler(false)
-            }
-        }
-
-        // Bind the event listener
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            // Unbind the event listener on clean up
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [cartRef]);
 
     useEffect(() => {
         if (Object.values(cart)){
@@ -42,7 +21,6 @@ const Cart = (props) => {
     }
     return (
         <div
-            ref={cartRef}
             className={`dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 p-4 ${expandCart?'show':''}`}
             style={{width: 300}}>
             <CartContent cartItems={cartItems}></CartContent>

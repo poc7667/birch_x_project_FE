@@ -6,6 +6,9 @@ const Action = {
     clearActiveSku:'clearActiveSku',
     addItemToCart:'addItemToCart',
     loadReviews: 'loadReviews',
-    addReview: 'addReview'
+
+    addReview: 'addReview',
+    loadCustomers: 'loadCustomers',
+    logout: 'logout',
 }
 export default Action;

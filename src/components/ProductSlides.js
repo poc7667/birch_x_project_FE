@@ -2,15 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/storeReducer";
 
 const ProductSlides = (props) => {
-    const {storeState: {activeSkuID}} = useContext(StoreContext);
+    const {storeState: {activeSkuId}} = useContext(StoreContext);
     const {activeProduct, skus} = props
     const [currentIndex, setCurrentIndex] = useState(0)
-    const skuIDs = skus?.map(item => item.ID) || []
+    const skuIDs = skus?.map(item => item.id) || []
     useEffect(() => {
-        if (activeSkuID) {
-            setCurrentIndex(skuIDs.indexOf(activeSkuID))
+        if (activeSkuId) {
+            setCurrentIndex(skuIDs.indexOf(activeSkuId))
         }
-    }, [activeSkuID])
+    }, [activeSkuId])
 
     return (
         <div className="col-md-5">
@@ -27,7 +27,7 @@ const ProductSlides = (props) => {
                                          className={`tiny-slide tns-item ${currentIndex === index ? 'show' : 'hide'}`}
                                          style={{display: currentIndex !== index ? 'none' : false}}
                                          tabIndex={-1}><img src={sku.image}
-                                                            className="img-fluid rounded" alt/></div>
+                                                            className="img-fluid rounded"/></div>
                                 )
                             })}
                         </div>
