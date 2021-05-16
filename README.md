@@ -14,6 +14,8 @@
 
 ## 2021-05-16
 
+Changes: https://github.com/poc7667/birch_x_project_FE/pull/20/files
+
 
 # 如何更新 front-end (React)
 
