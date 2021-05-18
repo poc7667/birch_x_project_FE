@@ -8,8 +8,8 @@ const ProductPropType = {
 }
 
 const SkuPropType = {
-    ID: PropTypes.string.isRequired,
-    productID: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    product_id: PropTypes.string.isRequired,
     size: PropTypes.string,
     color: PropTypes.string,
     style: PropTypes.string,
@@ -18,9 +18,17 @@ const SkuPropType = {
     stock: PropTypes.number.isRequired
 }
 
+const CustomerPropType = {
+    id: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+}
+
+
 const ReviewPropType = {
-    ID: PropTypes.string,
-    productID: PropTypes.string,
+    id: PropTypes.string,
+    product_id: PropTypes.string,
     skuID: PropTypes.string,
     userId: PropTypes.string,
     score: PropTypes.number,
@@ -28,7 +36,7 @@ const ReviewPropType = {
 }
 
 const CartPropType = {
-    productID: PropTypes.string,
+    product_id: PropTypes.string,
     sku: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired
 };
@@ -41,6 +49,7 @@ export const initialStoreState = {
     activeSkuID: null,
     products: [],
     skus:{},
+    customers: {},
     reviews: {},
     cart: {},
     shippingCost: 10
@@ -54,6 +63,7 @@ initialStoreState.PropTypes = {
     activeProduct: ProductPropType,
     activeSkuID: PropTypes.string,
     products: PropTypes.arrayOf(ProductPropType),
+    customers: PropTypes.objectOf(CustomerPropType),
     skus: PropTypes.objectOf(PropTypes.arrayOf(SkuPropType)),
     reviews: PropTypes.objectOf(PropTypes.arrayOf(ReviewPropType)),
     cart: CartPropType,

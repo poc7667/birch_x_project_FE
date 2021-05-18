@@ -10,7 +10,7 @@ const SkuItems = (props) => {
         if (skus) {
             setSkuItems(skus.map(item => {
                 const {
-                    productID,
+                    product_id,
                     image,
                     ID,
                     title,
@@ -19,7 +19,7 @@ const SkuItems = (props) => {
                 } = item;
 
                 return {
-                    productID,
+                    product_id,
                     image,
                     ID,
                     title,

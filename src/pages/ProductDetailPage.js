@@ -8,7 +8,7 @@ import Action from "../constants/Action";
 import ProductReviews from "../components/ProductReviews";
 
 const ProductDetailPage = () => {
-    const {productId} = useParams();
+    const {product_id} = useParams();
     const {storeState, dispatch} = useContext(StoreContext);
     const {products, activeProduct, activeProduct: {productName, description}, skus, reviews} = storeState;
     const [selectedSku, setSelectedSku] = useState(null);
@@ -16,7 +16,7 @@ const ProductDetailPage = () => {
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const {loading, setLoading} = useState(storeState.isLoading);
 
-    const currentProductSkus = skus[productId];
+    const currentProductSkus = skus[product_id];
 
     /***
      * Update sku handler
@@ -30,7 +30,7 @@ const ProductDetailPage = () => {
     useEffect(() => {
         dispatch({type: Action.clearActiveSku, payload: null})
         if (products) {
-            dispatch({type: Action.loadProduct, payload: productId})
+            dispatch({type: Action.loadProduct, payload: product_id})
         }
         if (currentProductSkus) {
             updateSelectedSkuHandler(currentProductSkus[0]);
@@ -161,7 +161,7 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <ProductReviews selectedSku={selectedSku} productSkus={skus[productId]} productReviews={reviews[productId]}/>
+            <ProductReviews selectedSku={selectedSku} productSkus={skus[product_id]} productReviews={reviews[product_id]}/>
             {/*end col*/}
         </div>
     )

@@ -19,14 +19,14 @@ const ProductReviews = (props) => {
             setReviewEnabled(false);
         }
     }, [reviewScore])
-    
+
 
 
     const submitReviewHandler = () => {
         console.log([name, email, reviewComment])
         dispatch({
             type: Action.addReview, payload: {
-                productID: selectedSku.productID,
+                product_id: selectedSku.product_id,
                 skuID: selectedSku.ID,
                 score: reviewScore+1,
                 comment: reviewComment,

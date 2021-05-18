@@ -5,6 +5,7 @@ const Action = {
     selectSku:'selectSku',
     clearActiveSku:'clearActiveSku',
     addItemToCart:'addItemToCart',
+    loadCustomers: 'loadCustomers',
     loadReviews: 'loadReviews',
     addReview: 'addReview'
 }

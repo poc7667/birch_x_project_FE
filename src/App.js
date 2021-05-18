@@ -14,13 +14,19 @@ import OrderPage from "./pages/OrderPage";
 function App() {
     const [storeState, dispatch] = useReducer(storeReducer, initialStoreState)
 
+    const dataFetch = async (url) =>{
+        return await fetch(Constants.SERVER_URL + url).then(data => data.json());
+    }
+
     useState((async () => {
-        const productsResponse = await fetch(Constants.SERVER_URL + '/products').then(data => data.json());
-        const skuResponse = await fetch(Constants.SERVER_URL + '/skus').then(data => data.json());
-        const reviewsResponse = await fetch(Constants.SERVER_URL + '/reviews').then(data => data.json());
-        dispatch({type: Action.loadProducts, payload: productsResponse});
+        const customerResponse = await dataFetch('/customers');
+        const productsResponse = await dataFetch('/products');
+        const skuResponse = await dataFetch('/skus');
+        const reviewsResponse = await dataFetch('/reviews')
+        await dispatch({type: Action.loadCustomers, payload: customerResponse});
+        await dispatch({type: Action.loadProducts, payload: productsResponse});
         await dispatch({type: Action.loadSkus, payload: skuResponse});
-        dispatch({type: Action.loadReviews, payload: reviewsResponse});
+        await dispatch({type: Action.loadReviews, payload: reviewsResponse});
     }), []);
 
     const history = useHistory();
@@ -32,7 +38,7 @@ function App() {
                         history.push('/products');
                     }}></Route>
                     <Route exact path="/products" component={ProductsPage}></Route>
-                    <Route exact path="/products/:productId" component={ProductDetailPage}></Route>
+                    <Route exact path="/products/:product_id" component={ProductDetailPage}></Route>
                     <Route exact path="/checkout" component={CheckoutPage}></Route>
                     <Route exact path="/orders/:orderId" component={OrderPage}></Route>
                 </Switch>
