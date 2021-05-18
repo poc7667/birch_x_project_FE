@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 const ProductGrid = ({product, skus}) => {
     const {
         id,
-        productName
+        productName,
+        name,
+        reviewScore
     } = product || {};
     const {image, price} = skus[0];
     return (
@@ -28,7 +30,7 @@ const ProductGrid = ({product, skus}) => {
                         className="text-dark product-name h6"
                         to={`/products/${id}`}
                     >
-                        {productName}
+                        {name}
                     </Link>
                     <div className="d-flex justify-content-between mt-1">
                         <h6 className="text-muted small fst-italic mb-0 mt-1">$ {price}
@@ -36,6 +38,11 @@ const ProductGrid = ({product, skus}) => {
                                 className="text-danger ms-2">$ {(price / Constants.DISCOUNT).toFixed(0)}</del>
                         </h6>
                     </div>
+                    <ul className="list-unstyled text-warning h5 mb-0">
+                        {
+                            [...new Array(parseInt(reviewScore))].map(()=><li className="list-inline-item"><i className="mdi mdi-star"/></li>)
+                        }
+                    </ul>
                 </div>
             </div>
         </div>

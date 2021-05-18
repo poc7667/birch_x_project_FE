@@ -38,6 +38,10 @@ function App() {
                         history.push('/products');
                     }}></Route>
                     <Route exact path="/products" component={ProductsPage}></Route>
+                    <Route exact path="/admin" component={AdminPage}></Route>
+                    <Route exact path="/login" component={LoginPage}></Route>
+                    <Route exact path="/orders/:orderId" component={OrderPage}></Route>
+                    <Route exact path="/orders" component={OrdersPage}></Route>                    
                     <Route exact path="/products/:product_id" component={ProductDetailPage}></Route>
                     <Route exact path="/checkout" component={CheckoutPage}></Route>
                     <Route exact path="/orders/:orderId" component={OrderPage}></Route>

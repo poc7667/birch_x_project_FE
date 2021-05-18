@@ -1,25 +1,6 @@
-import { useContext, useEffect, useReducer, useState } from "react";
-import { StoreContext } from "../store/storeReducer";
-import CartContent from "../components/CartContent";
-import useCartSubtotal from "../hooks/useCartSubtotal";
 import { Link } from "react-router-dom";
 
 const OrderPage = () => {
-    const {storeState: {shippingCost, cart}} = useContext(StoreContext);
-    const [subtotal, setSubtotal] = useCartSubtotal();
-    const [cartItems, setCartItems] = useState(null);
-
-    useEffect(() => {
-        if (Object.values(cart).length) {
-            setCartItems(Object.values(cart));
-            setSubtotal(Object.values(cart));
-        }
-    }, [cart]);
-
-    if (!cartItems) {
-        return (<></>);
-    }
-
     return (
         <>
             <div >

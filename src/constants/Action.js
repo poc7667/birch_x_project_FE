@@ -7,6 +7,9 @@ const Action = {
     addItemToCart:'addItemToCart',
     loadCustomers: 'loadCustomers',
     loadReviews: 'loadReviews',
-    addReview: 'addReview'
+
+    addReview: 'addReview',
+    loadCustomers: 'loadCustomers',
+    logout: 'logout',
 }
 export default Action;
