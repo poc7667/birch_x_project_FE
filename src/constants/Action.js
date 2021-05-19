@@ -5,11 +5,10 @@ const Action = {
     selectSku:'selectSku',
     clearActiveSku:'clearActiveSku',
     addItemToCart:'addItemToCart',
-    loadCustomers: 'loadCustomers',
     loadReviews: 'loadReviews',
-
     addReview: 'addReview',
     loadCustomers: 'loadCustomers',
+    login: 'login',
     logout: 'logout',
 }
 export default Action;

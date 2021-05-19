@@ -55,9 +55,9 @@ export function storeReducer(state, action) {
             if (cart[sku.id].quantity === 0) {
                 cart[sku.id] = undefined;
             }
-            console.log(skus);
             return Object.assign({}, state, {cart, skus});
-
+        case Action.login:
+            return Object.assign({}, state, {user: Object.values(state.customers)[0]});
         case Action.loadReviews:
             action.payload.map(review=>{
                 const {

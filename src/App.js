@@ -1,6 +1,6 @@
 import './App.css';
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
-import React, { createContext, useReducer, useState } from "react";
+import {Route, Switch, useHistory } from "react-router-dom";
+import React, {useReducer, useState } from "react";
 import { Constants } from "./Constants";
 import StoreLayout from "./storeLayout";
 import { storeReducer, StoreContext } from "./store/storeReducer";
@@ -10,6 +10,9 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderPage from "./pages/OrderPage";
+import AdminPage from "./pages/AdminPage";
+import LoginPage from "./pages/LoginPage";
+import OrdersPage from "./pages/OrdersPage";
 
 function App() {
     const [storeState, dispatch] = useReducer(storeReducer, initialStoreState)
@@ -41,7 +44,7 @@ function App() {
                     <Route exact path="/admin" component={AdminPage}></Route>
                     <Route exact path="/login" component={LoginPage}></Route>
                     <Route exact path="/orders/:orderId" component={OrderPage}></Route>
-                    <Route exact path="/orders" component={OrdersPage}></Route>                    
+                    <Route exact path="/orders" component={OrdersPage}></Route>
                     <Route exact path="/products/:product_id" component={ProductDetailPage}></Route>
                     <Route exact path="/checkout" component={CheckoutPage}></Route>
                     <Route exact path="/orders/:orderId" component={OrderPage}></Route>

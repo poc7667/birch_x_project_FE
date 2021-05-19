@@ -12,7 +12,7 @@ const SkuItems = (props) => {
                 const {
                     product_id,
                     image,
-                    ID,
+                    id,
                     title,
                     price,
                     stock
@@ -21,7 +21,7 @@ const SkuItems = (props) => {
                 return {
                     product_id,
                     image,
-                    ID,
+                    id,
                     title,
                     price,
                     stock
@@ -37,13 +37,13 @@ const SkuItems = (props) => {
                 {
                     skuItems.map(item => {
                         return (
-                            <li className="list-inline-item" key={`sku-item-li-${item.ID}`}>
+                            <li className="list-inline-item" key={`sku-item-li-${item.id}`}>
                                 <Link
-                                    key={`sku-item-li-link-${item.ID}`}
+                                    key={`sku-item-li-link-${item.id}`}
                                     to={`#`}
                                     onClick={() => updateSelectedSkuHandler(item)}
                                     style={{width: 'auto', margin: 5, paddingLeft: 5, paddingRight: 5}}
-                                    className={`btn btn-icon ${item.ID !== activeSkuID ? 'btn-soft-primary' : 'btn-soft-warning'}`}> {item.title}
+                                    className={`btn btn-icon ${item.id !== activeSkuID ? 'btn-soft-primary' : 'btn-soft-warning'}`}> {item.title}
                                 </Link>
                             </li>
                         )

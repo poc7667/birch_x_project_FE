@@ -27,7 +27,7 @@ const ProductReviews = (props) => {
         dispatch({
             type: Action.addReview, payload: {
                 product_id: selectedSku.product_id,
-                skuID: selectedSku.ID,
+                skuID: selectedSku.id,
                 score: reviewScore+1,
                 comment: reviewComment,
                 email,

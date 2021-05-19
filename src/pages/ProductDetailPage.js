@@ -24,7 +24,7 @@ const ProductDetailPage = () => {
      */
     const updateSelectedSkuHandler = (sku) => {
         setSelectedSku(sku);
-        dispatch({type: Action.selectSku, payload: {activeSkuID: sku.ID}})
+        dispatch({type: Action.selectSku, payload: {activeSkuID: sku.id}})
     }
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const ProductDetailPage = () => {
     useEffect(() => {
         if (Array.isArray(currentProductSkus) && selectedSku){
             currentProductSkus.forEach(item =>{
-                if(item.ID === selectedSku.ID && item.stock !== selectedSku.stock) {
+                if(item.id === selectedSku.id && item.stock !== selectedSku.stock) {
                     updateSelectedSkuHandler(item);
                 }
             })

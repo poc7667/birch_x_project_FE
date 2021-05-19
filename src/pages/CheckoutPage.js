@@ -106,7 +106,7 @@ const PaymentSection = ({setPaymentInfo}) => {
                             <input name="name" id="security_code"
                                    value={paymentDetail.payload?.security_code}
                                    maxLength={3}
-                                   onChange={(e)=>payloadChange('security_code', e)}
+                                   onChange={(e)=>payloadChange('çç', e)}
                                    type="text" className="form-control"
                                    placeholder="Security code"/>
                         </div>
@@ -172,12 +172,12 @@ const CheckoutPage = () => {
             },
             body: JSON.stringify({
                 user,
-                items: cartItems,
+                line_items: cartItems,
                 contact,
-                paymentInfo
+                payment_info:paymentInfo
             }) // body data type must match "Content-Type" header
         }
-        const response = await fetch(Constants.SERVER_URL + '/orders', postData);
+        const response = await fetch(Constants.SERVER_URL + '/orders/', postData);
         history.push('/orders/1');
     }
 

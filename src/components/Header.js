@@ -5,8 +5,8 @@ import { StoreContext } from "../store/storeReducer";
 import Action from "../constants/Action";
 
 const Header = () => {
-    const {storeState: {activeSkuId, cart, user}} = useContext(StoreContext);
-    const {storeState, dispatch} = useContext(StoreContext);
+    const {storeState: {cart, user}} = useContext(StoreContext);
+    const {dispatch} = useContext(StoreContext);
     const [expandCart, setExpandCart] = useState(false);
     const [expandAccount, setExpandAccount] = useState(false);
 
