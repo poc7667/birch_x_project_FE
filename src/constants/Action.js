@@ -10,5 +10,6 @@ const Action = {
     loadCustomers: 'loadCustomers',
     login: 'login',
     logout: 'logout',
+    clearCart: 'clearCart'
 }
 export default Action;

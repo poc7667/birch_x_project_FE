@@ -84,6 +84,8 @@ export function storeReducer(state, action) {
             newReviews.title = state.skus[newReviews.product_id].filter(sku => sku.id === newReviews.sku_id)[0].title;
             reviews[action.payload.product_id].push(newReviews);
             return Object.assign({}, state, {reviews});
+        case Action.clearCart:
+            return Object.assign({}, state, {cart:{}});
         default:
             return Object.assign({}, state);
     }

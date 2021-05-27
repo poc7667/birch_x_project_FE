@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/storeReducer";
 import { LoginForm } from "../components/LoginForm";
-import { DataItems } from "../components/DataItems";
+import { DataTableRows } from "../components/DataTableRows";
 import { Constants } from "../Constants";
 import { SchemaDefinition } from "../schemaDefinition";
+import UpdateShipment from "../components/UpdateShipment";
 
 const toTitle = (name) => {
     return name[0].toUpperCase() + name.slice(1);
@@ -20,25 +21,73 @@ const AdminPage = () => {
         }
     }, [auth])
 
-    const adminLoginHandler = () =>{
+    const adminLoginHandler = () => {
         setAuth(true)
     }
+
+    const [order, setOrder] = useState(null)
 
     // Load data
 
     const [orders, setOrders] = useState([])
     const [shipments, setShipments] = useState([])
+    const [deliveries, setDeliveries] = useState([])
     const [employees, setEmployees] = useState([])
     const [payments, setPayments] = useState([])
+    const [customers, setCustomers] = useState([])
 
+    const updateShipment = (response) => {
+        loadData()
+        setShipments(shipments.map(item => {
+            if (item.id === response.id) {
+                item.employee_id = response.employee_id;
+                item.shipDate = response.shipDate;
+            }
+            return item;
+        }))
+    }
 
-    useEffect((async () => {
+    const addDelivery = (response) => {
+        loadData()
+        console.log(response);
+    }
+
+    const loadData = async()=> {
         Object.keys(SchemaDefinition).map(async sectionName => {
-            const data = await fetch(Constants.SERVER_URL + '/'+ sectionName).then(data => data.json());
+            const data = await fetch(Constants.SERVER_URL + '/' + sectionName).then(data => data.json());
             console.log(`set${toTitle(sectionName)}(data)`)
             eval(`set${toTitle(sectionName)}(data)`)
+            console.log(customers);
         })
+    }
+
+    useEffect((async () => {
+        await loadData()
     }), []);
+
+    const renderContent = () =>{
+        switch(activeSectionName){
+            case 'shipments':
+                return (
+                    <>
+                        <DataTableRows items={eval(activeSectionName)}
+                                       definitions={SchemaDefinition[activeSectionName]}>
+                            <UpdateShipment shipments={shipments} employees={employees} orders={orders}
+                                            updateShipment={updateShipment}
+                                            addDelivery={addDelivery}
+                            />
+                        </DataTableRows>
+                    </>
+                )
+            default:
+                return (
+                        <DataTableRows items={eval(activeSectionName)}
+                                       definitions={SchemaDefinition[activeSectionName]}/>
+                    )
+        }
+
+    }
+
 
     return (
         <>
@@ -82,8 +131,7 @@ const AdminPage = () => {
                             <div className="tab-content" id="pills-tabContent">
                                 <div className="tab-pane active" id="pills-cloud" role="tabpanel"
                                      aria-labelledby="pills-cloud-tab">
-                                    <DataItems items={eval(activeSectionName)}
-                                               definitions={SchemaDefinition[activeSectionName]}/>
+                                    {renderContent()}
                                 </div>
                                 {/*end teb pane*/}
                             </div>
