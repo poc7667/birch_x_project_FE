@@ -9,9 +9,15 @@ const OrdersPage = () => {
     const {user} = storeState;
     const [orders, setOrders] = useState([])
 
+    const fetchData =async () =>{
+        const orders = await fetch(Constants.SERVER_URL + `/orders`).then(data => data.json());
+        setOrders(orders);
+        return setTimeout(fetchData, 2000);
+    }
+
     useEffect(async () => {
-        const data = await fetch(Constants.SERVER_URL + `/orders`).then(data => data.json());
-        setOrders(data);
+        const timeoutId = await fetchData()
+        // clearTimeout(timeoutId);
     }, [])
 
     return (

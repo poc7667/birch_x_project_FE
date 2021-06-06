@@ -14,6 +14,7 @@ const LoginPage = () => {
     const [email, setEmail] = useState(false);
     const [hasError, setHasError] = useState(false);
 
+
     useEffect(async () => {
         if (loginState) {
             dispatch({
