@@ -10,7 +10,7 @@ const OrdersPage = () => {
     const [orders, setOrders] = useState([])
 
     useEffect(async () => {
-        const data = await fetch(Constants.SERVER_URL + '/orders').then(data => data.json());
+        const data = await fetch(Constants.SERVER_URL + `/orders`).then(data => data.json());
         setOrders(data);
     }, [])
 
@@ -25,7 +25,7 @@ const OrdersPage = () => {
                         <div className="tab-content" id="pills-tabContent">
                             <div className="tab-pane active" id="pills-cloud" role="tabpanel"
                                  aria-labelledby="pills-cloud-tab">
-                                <DataTableRows items={orders.filter(order => user.id == order.customer)}
+                                <DataTableRows items={orders.filter(order => user.id == order.customer_id)}
                                                definitions={SchemaDefinition.orders}/>
                             </div>
                             {/*end teb pane*/}

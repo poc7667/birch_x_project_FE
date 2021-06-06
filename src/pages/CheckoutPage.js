@@ -220,7 +220,7 @@ const CheckoutPage = () => {
                                         </tr>
                                         <tr>
                                             <td className="h6">Shipping Charge</td>
-                                            <td className="text-end fw-bold">$ {shippingCost}</td>
+                                            <td className="text-end fw-bold">$ {shippingCost.toFixed(2) }</td>
                                         </tr>
                                         <tr className="bg-light">
                                             <td className="h5 fw-bold">Total</td>

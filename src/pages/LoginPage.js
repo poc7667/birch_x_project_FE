@@ -9,31 +9,47 @@ const LoginPage = () => {
     const history = useHistory();
 
     const {storeState, dispatch} = useContext(StoreContext);
-    const {user} = storeState;
+    const {user, customers} = storeState;
     const [loginState, setLoginState] = useState(false);
+    const [email, setEmail] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(async () => {
-        if (loginState){
-            dispatch({type: Action.login});
+        if (loginState) {
+            dispatch({
+                type: Action.login,
+                payload: {email}
+            });
         }
-    },[loginState])
+    }, [loginState])
 
     useEffect(() => {
-        if (user.id){
+        if (user.id) {
             history.push('/products');
         }
-    },[user])
+    }, [user])
 
-    const loginHandler = () => {
-
-        setLoginState(true);
+    const loginHandler = (email) => {
+        const customer = Object.values(customers).filter(user => user.email === email)?.[0]
+        if (customer) {
+            setEmail(email);
+            setLoginState(true);
+            setHasError(false);
+        }
+        {
+            setHasError(true);
+        }
     }
 
     return (
         <div className="component-wrapper rounded shadow">
+            {hasError &&
+            <div className="alert alert-danger" role="alert"> Wrong login info </div>
+            }
+
             <LoginForm
                 clickLoginHandler={loginHandler}
-                title={`User Login`} />
+                title={`User Login`}/>
         </div>
     )
 }
