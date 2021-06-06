@@ -49,6 +49,10 @@ export const SchemaDefinition =  {
         {
             "title": "shipDate",
             "value": "shipDate"
+        },
+        {
+            "title": "status",
+            "value": "order_status"
         }
     ],
     'deliveries': [

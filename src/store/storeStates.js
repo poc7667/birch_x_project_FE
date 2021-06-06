@@ -29,7 +29,7 @@ const CustomerPropType = {
 const ReviewPropType = {
     id: PropTypes.string,
     product_id: PropTypes.string,
-    skuID: PropTypes.string,
+    skuId: PropTypes.string,
     userId: PropTypes.string,
     score: PropTypes.number,
     comment: PropTypes.string,
@@ -46,7 +46,7 @@ export const initialStoreState = {
     isLoading: true,
     user: {},
     activeProduct: {},
-    activeSkuID: null,
+    activeSkuId: null,
     products: [],
     skus:{},
     customers: {},
@@ -61,7 +61,7 @@ initialStoreState.PropTypes = {
         name: PropTypes.string
     }),
     activeProduct: ProductPropType,
-    activeSkuID: PropTypes.string,
+    activeSkuId: PropTypes.string,
     products: PropTypes.arrayOf(ProductPropType),
     customers: PropTypes.objectOf(CustomerPropType),
     skus: PropTypes.objectOf(PropTypes.arrayOf(SkuPropType)),

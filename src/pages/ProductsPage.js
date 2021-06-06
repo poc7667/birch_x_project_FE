@@ -1,12 +1,9 @@
-import { useContext, useReducer, useState } from "react";
+import { useContext } from "react";
 import ProductGrid from "../components/productGrid";
 import { StoreContext } from "../store/storeReducer";
-import { childrenOfNode } from "enzyme/src/RSTTraversal";
 
 const ProductsPage = () => {
     const {storeState: {products, skus}} = useContext(StoreContext);
-    console.log(products);
-    console.log(skus);
     if (!Object.values(skus).length) {
         return (<></>);
     }

@@ -20,7 +20,6 @@ const OrdersPage = () => {
                 <h4 className="title mb-0"> Your Recent Orders</h4>
             </div>
             <div className="p-4">
-
                 <div className="row pt-2">
                     <div className="col-12">
                         <div className="tab-content" id="pills-tabContent">

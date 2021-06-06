@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { StoreContext } from "../store/storeReducer";
 
 const SkuItems = (props) => {
-    const {storeState: {activeSkuID}} = useContext(StoreContext);
+    const {storeState: {activeSkuId}} = useContext(StoreContext);
     const {activeProduct, skus, updateSelectedSkuHandler} = props
     const [skuItems, setSkuItems] = useState([])
     useEffect(() => {
@@ -43,7 +43,7 @@ const SkuItems = (props) => {
                                     to={`#`}
                                     onClick={() => updateSelectedSkuHandler(item)}
                                     style={{width: 'auto', margin: 5, paddingLeft: 5, paddingRight: 5}}
-                                    className={`btn btn-icon ${item.id !== activeSkuID ? 'btn-soft-primary' : 'btn-soft-warning'}`}> {item.title}
+                                    className={`btn btn-icon ${item.id !== activeSkuId ? 'btn-soft-primary' : 'btn-soft-warning'}`}> {item.title}
                                 </Link>
                             </li>
                         )

@@ -33,7 +33,7 @@ export function storeReducer(state, action) {
         case Action.selectSku:
             return Object.assign({}, state, action.payload);
         case Action.clearActiveSku:
-            return Object.assign({}, state, {activeSkuID: null});
+            return Object.assign({}, state, {activeSkuId: null});
         case Action.addItemToCart:
             // Didn't handle the stock in sku.
             let cart = Object.assign({}, state.cart)
@@ -61,11 +61,12 @@ export function storeReducer(state, action) {
         case Action.loadReviews:
             action.payload.map(review=>{
                 const {
+                    nickname,
                     product_id,
                     customer_id
                 } = review
                 const {firstName, lastName} = state.customers[customer_id]
-                review.title = `${firstName} ${lastName}`;
+                review.title = nickname || `${firstName} ${lastName}`;
                 // load sku description for each review
               if (!reviews[product_id]){
                   reviews[product_id] = [];
@@ -73,17 +74,23 @@ export function storeReducer(state, action) {
               reviews[product_id].push({...review});
             })
             return Object.assign({}, state, {reviews});
+        case Action.addReview:
+            let newReviews = action.payload;
+            const {
+                nickname,
+                customer_id
+            } = newReviews
+            const {firstName, lastName} = state.customers[customer_id]
+            newReviews.title = nickname || `${firstName} ${lastName}`;
+            reviews[action.payload.product_id].push(newReviews);
+            return Object.assign({}, state, {reviews});
         case Action.loadCustomers:
             console.log(action.payload);
             return Object.assign({}, state, {customers: action.payload.reduce((data, customer)=>{
                 data[customer.id] = customer;
                 return data;
             },{})});
-        case Action.addReview:
-            let newReviews = action.payload;
-            newReviews.title = state.skus[newReviews.product_id].filter(sku => sku.id === newReviews.sku_id)[0].title;
-            reviews[action.payload.product_id].push(newReviews);
-            return Object.assign({}, state, {reviews});
+
         case Action.clearCart:
             return Object.assign({}, state, {cart:{}});
         default:

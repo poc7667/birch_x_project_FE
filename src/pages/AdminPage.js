@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/storeReducer";
 import { LoginForm } from "../components/LoginForm";
 import { DataTableRows } from "../components/DataTableRows";
 import { Constants } from "../Constants";
 import { SchemaDefinition } from "../schemaDefinition";
 import UpdateShipment from "../components/UpdateShipment";
+import { DataTableWrapper } from "../components/DataTableWrapper";
+import Moment from 'react-moment';
 
 const toTitle = (name) => {
     return name[0].toUpperCase() + name.slice(1);
@@ -38,52 +40,130 @@ const AdminPage = () => {
 
     const updateShipment = (response) => {
         loadData()
-        setShipments(shipments.map(item => {
-            if (item.id === response.id) {
-                item.employee_id = response.employee_id;
-                item.shipDate = response.shipDate;
-            }
-            return item;
-        }))
+        // setShipments(shipments.map(item => {
+        //     if (item.id === response.id) {
+        //         item.employee_id = response.employee_id;
+        //         item.shipDate = response.shipDate;
+        //     }
+        //     return item;
+        // }))
     }
 
     const addDelivery = (response) => {
         loadData()
-        console.log(response);
     }
 
-    const loadData = async()=> {
-        Object.keys(SchemaDefinition).map(async sectionName => {
-            const data = await fetch(Constants.SERVER_URL + '/' + sectionName).then(data => data.json());
-            console.log(`set${toTitle(sectionName)}(data)`)
-            eval(`set${toTitle(sectionName)}(data)`)
-            console.log(customers);
-        })
+    const loadData = async () => {
+        setTimeout(() => {
+            Object.keys(SchemaDefinition).map(async sectionName => {
+                const data = await fetch(Constants.SERVER_URL + '/' + sectionName).then(data => data.json());
+                eval(`set${toTitle(sectionName)}(data)`)
+            })
+        }, 200)
     }
 
     useEffect((async () => {
         await loadData()
     }), []);
 
-    const renderContent = () =>{
-        switch(activeSectionName){
+    const renderContent = () => {
+        const items = eval(activeSectionName);
+        switch (activeSectionName) {
+            case 'orders':
+                return (
+                    <DataTableWrapper items={items}
+                                      definitions={SchemaDefinition[activeSectionName]}>
+                        {
+                            eval(activeSectionName).map(record => {
+                                let buttonClassName = 'bg-primary';
+                                if (record.status==='delivered'){
+                                    buttonClassName = 'bg-success';
+                                }
+                                if (record.status==='shipped'){
+                                    buttonClassName = 'bg-info';
+                                }
+                                return (
+                                    <tr key={record.id}>
+                                        <td>
+                                            {record.id}
+
+                                        </td>
+                                        <td>
+                                            {record.customer_id}
+                                        </td>
+                                        <td>
+                                            <Moment format="YYYY/MM/DD">
+                                                {new Date(record.orderedDate)}
+                                            </Moment>
+                                        </td>
+                                        <td>
+                                            <span className={`badge ${buttonClassName}`}>
+                                                {toTitle(record.status)}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {record.price}
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </DataTableWrapper>
+                )
             case 'shipments':
                 return (
-                    <>
-                        <DataTableRows items={eval(activeSectionName)}
-                                       definitions={SchemaDefinition[activeSectionName]}>
-                            <UpdateShipment shipments={shipments} employees={employees} orders={orders}
-                                            updateShipment={updateShipment}
-                                            addDelivery={addDelivery}
-                            />
-                        </DataTableRows>
-                    </>
+                    <DataTableWrapper items={items}
+                                      definitions={SchemaDefinition[activeSectionName]}>
+                        {
+                            eval(activeSectionName).map(record => {
+                                let buttonClassName = 'bg-primary';
+                                if (record.order_status==='delivered'){
+                                    buttonClassName = 'bg-success';
+                                }
+                                if (record.order_status==='shipped'){
+                                    buttonClassName = 'bg-info';
+                                }
+                                return (
+                                    <tr key={record.id}>
+                                        <td>
+                                            {record.id}
+
+                                        </td>
+                                        <td>
+                                            {record.order_id}
+                                        </td>
+                                        <td>
+                                            {record.employee_id}
+                                        </td>
+                                        <td>
+                                            {record.shipDate}
+                                        </td>
+                                        <td>
+                                            <span className={`badge ${buttonClassName}`}>
+                                                {toTitle(record.order_status)}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <UpdateShipment
+                                                selectedShipment={record}
+                                                orderStatus={record.order_status}
+                                                orderId={record.order_id}
+                                                employees={employees}
+                                                updateShipment={updateShipment}
+                                                addDelivery={addDelivery}
+                                            />
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </DataTableWrapper>
                 )
             default:
                 return (
-                        <DataTableRows items={eval(activeSectionName)}
-                                       definitions={SchemaDefinition[activeSectionName]}/>
-                    )
+                    <DataTableRows items={eval(activeSectionName)}
+                                   definitions={SchemaDefinition[activeSectionName]}/>
+                )
         }
 
     }
@@ -99,7 +179,8 @@ const AdminPage = () => {
                 <div className="p-4">
                     <div className="row">
                         <div className="col-lg-12">
-                            <ul className="nav nav-pills nav-justified flex-column flex-sm-row rounded" id="pills-tab"
+                            <ul className="nav nav-pills nav-justified flex-column flex-sm-row rounded"
+                                id="pills-tab"
                                 role="tablist">
                                 {
                                     Object.keys(SchemaDefinition).map(sectionName => {

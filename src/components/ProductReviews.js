@@ -2,6 +2,8 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import useInput from "../hooks/useInput";
 import Action from "../constants/Action";
 import { StoreContext, storeReducer } from "../store/storeReducer";
+import { Constants } from "../Constants";
+import { utils } from "../utils";
 
 const ProductReviews = (props) => {
     const {dispatch} = useContext(StoreContext);
@@ -22,19 +24,29 @@ const ProductReviews = (props) => {
 
 
 
-    const submitReviewHandler = () => {
-        console.log([name, email, reviewComment])
-        dispatch({
-            type: Action.addReview, payload: {
-                product_id: selectedSku.product_id,
-                skuID: selectedSku.id,
-                score: reviewScore+1,
-                comment: reviewComment,
-                email,
-                name
+    const submitReviewHandler =  () => {
+        // product = models.ForeignKey(Product, on_delete=models.CASCADE)
+        // sku = models.ForeignKey(Sku, on_delete=models.CASCADE)
+        // score = models.IntegerField()
+        // comment = models.TextField()
+        // customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
-            }
+
+        utils.postRequest({
+            customer_id: '1',
+            nickname: name,
+            product_id: selectedSku.product_id.toString(),
+            sku_id: selectedSku.id.toString(),
+            score: reviewScore+1,
+            comment: reviewComment,
+        }, `/reviews/`).then(response=> {
+            console.log(response);
+            dispatch({
+                type: Action.addReview, payload: response
+            })
         })
+
+
         // Clear review
         setReviewScore(-1);
         setReviewComment('');

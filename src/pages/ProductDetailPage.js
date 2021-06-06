@@ -24,7 +24,7 @@ const ProductDetailPage = () => {
      */
     const updateSelectedSkuHandler = (sku) => {
         setSelectedSku(sku);
-        dispatch({type: Action.selectSku, payload: {activeSkuID: sku.id}})
+        dispatch({type: Action.selectSku, payload: {activeSkuId: sku.id}})
     }
 
     useEffect(() => {
