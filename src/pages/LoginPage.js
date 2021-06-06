@@ -14,14 +14,12 @@ const LoginPage = () => {
 
     useEffect(async () => {
         if (loginState){
-            const customersResponse = await fetch(Constants.SERVER_URL + '/customers').then(data => data.json());
-            dispatch({type: Action.loadCustomers, payload: customersResponse});
+            dispatch({type: Action.login});
         }
     },[loginState])
 
     useEffect(() => {
         if (user.id){
-            console.log(user);
             history.push('/products');
         }
     },[user])

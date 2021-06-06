@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { SchemaDefinition } from "../schemaDefinition";
 import { Constants } from "../Constants";
-import { DataItems } from "../components/DataItems";
+import { DataTableRows } from "../components/DataTableRows";
 import { StoreContext } from "../store/storeReducer";
 
 const OrdersPage = () => {
@@ -20,14 +20,13 @@ const OrdersPage = () => {
                 <h4 className="title mb-0"> Your Recent Orders</h4>
             </div>
             <div className="p-4">
-
                 <div className="row pt-2">
                     <div className="col-12">
                         <div className="tab-content" id="pills-tabContent">
                             <div className="tab-pane active" id="pills-cloud" role="tabpanel"
                                  aria-labelledby="pills-cloud-tab">
-                                <DataItems items={orders.filter(order => user.id == order.customer)}
-                                           definitions={SchemaDefinition.orders}/>
+                                <DataTableRows items={orders.filter(order => user.id == order.customer)}
+                                               definitions={SchemaDefinition.orders}/>
                             </div>
                             {/*end teb pane*/}
                         </div>
