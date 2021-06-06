@@ -23,6 +23,7 @@ function App() {
     }
 
     useState((async () => {
+        const email = localStorage.getItem('userEmail') || '';
         const customerResponse = await dataFetch('/customers');
         const productsResponse = await dataFetch('/products');
         const skuResponse = await dataFetch('/skus');
@@ -31,6 +32,13 @@ function App() {
         await dispatch({type: Action.loadProducts, payload: productsResponse});
         await dispatch({type: Action.loadSkus, payload: skuResponse});
         await dispatch({type: Action.loadReviews, payload: reviewsResponse});
+        if(email){
+            dispatch({
+                type: Action.login,
+                payload: {email}
+            });
+        }
+
     }), []);
 
     const history = useHistory();

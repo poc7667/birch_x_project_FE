@@ -12,7 +12,7 @@ const OrdersPage = () => {
     const fetchData =async () =>{
         const orders = await fetch(Constants.SERVER_URL + `/orders`).then(data => data.json());
         setOrders(orders);
-        return setTimeout(fetchData, 2000);
+        return setTimeout(fetchData, 1500);
     }
 
     useEffect(async () => {

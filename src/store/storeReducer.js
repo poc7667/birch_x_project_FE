@@ -57,8 +57,12 @@ export function storeReducer(state, action) {
             }
             return Object.assign({}, state, {cart, skus});
         case Action.login:
+            localStorage.setItem('userEmail', action.payload.email);
             const customer = Object.values(state.customers).filter(user => user.email === action.payload.email)?.[0]
             return Object.assign({}, state, {user: customer});
+        case Action.logout:
+            localStorage.setItem('userEmail', '');
+            return Object.assign({}, state, {user: {}});
         case Action.loadReviews:
             action.payload.map(review=>{
                 const {
